@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+    
+        
+    <hibernate-mapping>
+    
+    <class table="EMS_v2_USERS" name="ems.beans.UserBean">
+    
+    <id name="u_Id">
+    <column name="u_Id" ></column>
+    <generator class="assigned"></generator>
+    </id>
+    
+    <property name="name">
+    <column name="name">
+    </column>
+    </property>
+    
+    <property name="role">
+    <column name="role"></column>
+    </property>
+      
+      
+      <property name="phone">
+    <column name="phone">
+    </column>
+    </property>
+    
+    <property name="dno">
+    <column name="dno"></column>
+    </property>
+    
+    <property name="city">
+    <column name="city">
+    </column>
+    </property>
+    
+    <property name="street">
+    <column name="street"></column>
+    </property>
+    
+    <property name="state">
+    <column name="state">
+    </column>
+    </property>
+    
+    <property name="pin">
+    <column name="pin"></column>
+    </property>
+    
+    <property name="password">
+    <column name="password">
+    </column>
+    </property>
+    
+      </class>
+      
+      
+      
+      </hibernate-mapping>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+    
+    <hibernate-mapping>
+    <class table="EMS_V2_Login" name="ems.beans.LoginBean">
+    
+   <id name="userid">
+    <column name="userid"></column>
+    <generator class="assigned"></generator>
+  </id>
+    <property name="pwd">
+    <column name="pwd"></column>
+    </property>
+    
+    <property name="role">
+    <column name="role"></column>
+    </property>
+    
+    
+    </class>
+    
+    
+    </hibernate-mapping>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+    
+      <hibernate-mapping>
+    <class table="EMS_V2_batch" name="ems.beans.BatchBean2">
+    <id name="batchId">
+    <column name="batchId"></column>
+    <generator class="assigned"></generator>
+    </id>
+   
+    <property name="medName">
+    <column name="medName"></column>
+    </property>
+    
+    <property name="medPrice">
+    <column name="medPrice"></column>
+    </property>
+    
+    <property name="medId">
+    <column name="medId"></column>
+    </property>
+    
+    <property name="supplierId">
+    <column name="supplierId"></column>
+    </property>
+    
+     <property name="supplierName">
+    <column name="supplierName"></column>
+    </property>
+    
+    <property name="arrivalDate">
+    <column name="arrivalDate"></column>
+    </property>
+    
+    <property name="expiryDate">
+    <column name="expiryDate"></column>
+    </property>
+    
+    <property name="quantity">
+    <column name="quantity"></column>
+    </property>
+    
+    </class>
+    
+    
+    </hibernate-mapping>

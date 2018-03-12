@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+		
+		
+		<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/resources/message"></property>
+		</bean>
+		
+		
+		
+		<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">		
+		</bean>
+		
+		
+		
+		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="language"></property>
+		</bean>
+		
+		<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+		<ref bean="sessionFactory"></ref>
+		</property>
+		</bean>
+		
+		
+<!-- _______________________________________________________________________________________________________________________________________
+
+			LOGIN MAPPINGS
+_______________________________________________________________________________________________________________________________________		
+		
+		 -->
+
+<!-- Login mappings  -->
+<bean id="ls" class="ems.services.LoginService">
+		<property name="logd" ref="logd">
+		</property>
+		</bean>
+
+<bean id="logd" class="ems.dao.LoginDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate">
+		</property>
+		</bean>
+
+<bean name="logincontroller" class="ems.controller.LoginController">
+		<property name="formView" value="login"></property>
+		<property name="successView" value="admin"></property>
+		<property name="commandClass" value="ems.beans.LoginBean"></property>
+		<property name="commandName" value="logb"></property>
+		<property name="sessionForm" value="false"></property>
+		<property name="ls">
+		<ref local="ls"></ref>
+		</property>
+		</bean>	
+		
+			
+		
+		
+		
+		
+<!--  -->
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			Admin page mappings..   generate reports mappings
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+<bean name="reportcontroller" class="ems.controller.ReportController">
+		<property name="formView" value="reports"></property>
+		<property name="successView" value="PrintReport"></property>
+		<property name="commandClass" value="ems.beans.BatchBean2"></property>
+		<property name="commandName" value="reportobject"></property>
+		<property name="adminservice2">
+			<ref local="adminservice2" />
+		</property>
+	 </bean> 
+
+<bean id="adminservice2" class="ems.services.AdminService">
+		
+		<property name="admindao2">
+			<ref local="admindao" />
+		</property>
+		<property name="searchdao2">
+			<ref local="searchdao" />
+		</property>
+	</bean>
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+		                               END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+
+
+
+
+
+
+
+
+<!-- _______________________________________________________________________________________________________________________________________
+
+						BILLING MAPPINGS
+_______________________________________________________________________________________________________________________________________	
+		 -->
+		<!-- Billing 1 -->
+		<bean id="billingservice" class="ems.services.BillingService">
+		<property name="searchdao" ref="searchdao">
+		</property>
+		</bean>
+
+        <bean id="searchdao" class="ems.dao.SearchDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate">
+		</property>
+		</bean>
+		
+		<bean name="billingcontroller" class="ems.controller.BillingController">
+		<property name="formView" value="billing"></property>
+		<property name="successView" value="billing"></property>
+		<property name="commandClass" value="ems.beans.BillingBean"></property>
+		<property name="commandName" value="fetchMed"></property>
+		<property name="sessionForm" value="false"></property>
+		<property name="billingservice">
+		<ref local="billingservice"></ref>
+		</property>
+		</bean>	
+		
+		<!--  -->
+<!-- _______________________________________________________________________________________________________________________________________
+                                             END
+_______________________________________________________________________________________________________________________________________	 -->		
+		
+		
+		
+<!--
+______________________________________________________________________________________________________________________________________
+			Cart addition MAPPINGS  (Billing)
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+		 
+		 
+		<!--  <bean id="addToCartservice" class="ems.services.BillingService">
+		
+		</bean> -->
+
+        
+		 
+		 
+		 
+		 <bean name="addtocartcontroller" class="ems.controller.AddToCartController">
+		<property name="formView" value="billing"></property>
+		<property name="successView" value="billing"></property>
+		<property name="commandClass" value="ems.beans.BillingBean"></property>
+		<property name="commandName" value="addTocart"></property>
+		<property name="sessionForm" value="false"></property>
+		
+		</bean>	
+		 
+		 
+		 
+		 
+		 
+<!--
+______________________________________________________________________________________________________________________________________
+			 END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+		
+		
+		
+<!--
+______________________________________________________________________________________________________________________________________
+			generate bill MAPPINGS  (Billing)
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+<bean name="getbillcontroller" class="ems.controller.GetBillController">
+		<property name="formView" value="billing"></property>
+		<property name="successView" value="genbill"></property>
+		<property name="commandClass" value="ems.beans.BillingBean"></property>
+		<property name="commandName" value="getbill"></property>
+		<property name="sessionForm" value="false"></property>
+		
+		</bean>	
+
+<!--
+______________________________________________________________________________________________________________________________________
+			 END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			clear cart MAPPINGS  (Billing)
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+
+
+<bean name="clearcartcontroller" class="ems.controller.ClearCartController">
+		<property name="formView" value="billing"></property>
+		<property name="successView" value="genbill"></property>
+		<property name="commandClass" value="ems.beans.BillingBean"></property>
+		<property name="commandName" value="getbill"></property>
+		<property name="sessionForm" value="false"></property>
+		<property name="billingdao">
+		<ref local="billingdao"></ref>
+		</property>
+		</bean>	
+		
+		
+		
+		 <bean id="billingdao" class="ems.dao.BillingDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate">
+		</property>
+		</bean>
+
+<!--
+______________________________________________________________________________________________________________________________________
+			 END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			Search medicines MAPPINGS  (Billing)  med search
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+	
+	
+	
+	<bean id="medsearchservice" class="ems.services.MedSearchService">
+		<property name="medsearchdao" ref="medsearchdao">
+		</property>
+		</bean>
+
+        <bean id="medsearchdao" class="ems.dao.MedSearchDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate">
+		</property>
+		</bean>
+
+<bean name="medsearchcontroller" class="ems.controller.MedSearchController">
+		<property name="formView" value="userSearch"></property>
+		<property name="successView" value="userSearch"></property>
+		<property name="commandClass" value="ems.beans.MedicineBean"></property>
+		<property name="commandName" value="usersrch"></property>
+		<property name="sessionForm" value="false"></property>
+		<property name="medsearchservice">
+		<ref local="medsearchservice"></ref>
+		</property>
+		</bean>	
+			
+
+<!--
+______________________________________________________________________________________________________________________________________
+			 END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+<!--
+______________________________________________________________________________________________________________________________________
+			Admin page mappings..   delete user mappings
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+<bean name="DeleteUsercontroller" class="ems.controller.DeleteUserController">
+		<property name="formView" value="DeleteUser"></property>
+		<property name="successView" value="DeleteUser"></property>
+		<property name="commandClass" value="ems.beans.UserBean"></property>
+		<property name="commandName" value="du"></property>
+		<property name="dels">
+			<ref local="dels" />
+		</property>
+	</bean>
+
+	<bean id="dels" class="ems.services.DeleteUserService">
+		<property name="deldao" ref="deldao">
+		</property>
+	</bean>
+
+	<bean id="deldao" class="ems.dao.DeleteUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate">
+		</property>
+	</bean>
+
+
+
+
+
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+		                               END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			Admin page mappings..   ADDD user mappings
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+<bean name="UserBeancontroller" class="ems.controller.UserBeanController">
+		<property name="formView" value="addUser"></property>
+		<property name="successView" value="addUser"></property>
+		<property name="commandClass" value="ems.beans.UserBean"></property>
+		<property name="commandName" value="addUser"></property>
+		<property name="ubService">
+			<ref local="ubService" />
+		</property>
+
+
+		<!-- <property name="validator"> <bean class="ems.validator.UserBeanValidator"></bean> 
+			</property> -->
+		<property name="sessionForm" value="false">
+		</property>
+	</bean>
+
+	<bean id="ubService" class="ems.dao.UserBeanDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate">
+		</property>
+	</bean>
+
+
+
+
+
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+		                               END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			Admin page mappings..   SEARCH user mappings
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+<bean name="searchusercontroller" class="ems.controller.SearchUserController">
+		<property name="formView" value="viewUser"></property>
+		<property name="successView" value="viewUser"></property>
+		<property name="commandClass" value="ems.beans.UserBean"></property>
+		<property name="commandName" value="searchUser"></property>
+		<property name="finduserservice">
+			<ref local="finduserservice" />
+		</property>
+	</bean>
+
+	<bean id="finduserservice" class="ems.services.FindUserService">
+		<property name="admindao" ref="admindao">
+		</property>
+	</bean>
+
+	<bean id="admindao" class="ems.dao.AdminDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate">
+		</property>
+	</bean>
+
+
+
+
+
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+		                               END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			Admin page mappings..   Add to Batch mappings
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+<!-- currently working on this  -->
+
+
+<bean id="addbatchcontroller" class="ems.controller.AddBatchController">
+		<property name="formView" value="AddToInventory"></property>
+		<property name="successView" value="AddToInventory"></property>
+		<property name="commandClass" value="ems.beans.BatchBean2"></property>
+		<property name="commandName" value="batchinsert"></property>
+		<property name="adminservice5">
+			<ref local="adminservice5" />
+		</property>
+	 </bean>
+	 
+	 <!-- <bean name="addbatchcontroller2" class="ems.controller.AddBatchController">
+		<property name="formView" value="AddToInventory"></property>
+		<property name="successView" value="AddToInventory"></property>
+		<property name="commandClass" value="ems.beans.BatchBean"></property>
+		<property name="commandName" value="batchinsert"></property>
+		<property name="adminservice5">
+			<ref local="adminservice5" />
+		</property>
+	 </bean> -->
+
+
+<bean id="adminservice5" class="ems.services.AdminService">
+		
+		<property name="admindao2">
+			<ref local="admindao" />
+		</property>
+		<property name="searchdao2">
+			<ref local="searchdao" />
+		</property>
+	</bean>
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+		                               END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			Admin page mappings..   Add to Medicine mappings
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+<bean name="addtomedicinecontroller" class="ems.controller.AddToMedicineController">
+		<property name="formView" value="AddToInventory"></property>
+		<property name="successView" value="AddToInventory"></property>
+		<property name="commandClass" value="ems.beans.MedicineBean"></property>
+		<property name="commandName" value="addMed"></property>
+		<property name="searchservice">
+			<ref local="searchservice" />
+		</property>
+	 </bean>
+	 
+	 
+<bean id="searchservice" class="ems.services.SearchService">
+		
+		
+		<property name="searchdao">
+			<ref local="searchdao" />
+		</property>
+	</bean>
+
+<!--
+______________________________________________________________________________________________________________________________________
+		                               END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			Admin page mappings..   Add to Medicine mappings
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+ <bean name="placeordercontroller" class="ems.controller.PlaceOrderController">
+		<property name="formView" value="PlaceOrder"></property>
+		<property name="successView" value="PlaceOrder"></property>
+		<property name="commandClass" value="ems.beans.OrderBean"></property>
+		<property name="commandName" value="placeordobj"></property>
+		<property name="placeorderservice">
+			<ref local="placeorderservice" />
+		</property>
+	 </bean>
+
+<bean id="placeorderservice" class="ems.services.PlaceOrderService">
+		<property name="placeorderdao" ref="placeorderdao">
+		</property>
+		<property name="searchmeddao" ref="searchmeddao">
+		</property>
+	</bean>
+
+	<bean id="placeorderdao" class="ems.dao.PlaceOrderDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate">
+		</property>
+	</bean>
+	<bean id="searchmeddao" class="ems.dao.SearchMedDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate">
+		</property>
+	</bean>
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+		                               END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			Admin page mappings..   view expired products mappings
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+<!-- currently working on this  -->
+
+
+
+<bean name="viewexpiredcontroller" class="ems.controller.ViewExpiredController">
+		<property name="formView" value="ReturnItems"></property>
+		<property name="successView" value="ReturnItems"></property>
+		<property name="commandClass" value="ems.beans.BatchBean"></property>
+		<property name="commandName" value="expProd"></property>
+		<property name="adminservice3">
+			<ref local="adminservice3" />
+		</property>
+	 </bean>
+
+
+<bean id="adminservice3" class="ems.services.AdminService">
+		
+		<property name="admindao2">
+			<ref local="admindao" />
+		</property>
+		<property name="searchdao2">
+			<ref local="searchdao" />
+		</property>
+	</bean>
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+		                               END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			Admin page mappings..   return expired products mappings
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+<!-- currently working on this  -->
+
+
+
+<bean name="returnitemcontroller" class="ems.controller.ReturnItemController">
+		<property name="formView" value="ReturnItems"></property>
+		<property name="successView" value="ReturnItems"></property>
+		<property name="commandClass" value="ems.beans.BatchBean"></property>
+		<property name="commandName" value="retItem"></property>
+		<property name="adminservice4">
+			<ref local="adminservice4" />
+		</property>
+	 </bean>
+
+
+<bean id="adminservice4" class="ems.services.AdminService">
+		
+		<property name="admindao2">
+			<ref local="admindao" />
+		</property>
+		<property name="searchdao2">
+			<ref local="searchdao" />
+		</property>
+	</bean>
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+		                               END
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+
+
+
+
+
+
+
+
+
+
+<!--
+______________________________________________________________________________________________________________________________________
+			
+			url mappings
+_______________________________________________________________________________________________________________________________________		
+		
+-->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<bean id="urlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+		<props>
+		
+		     <prop key="/login.spring">logincontroller</prop>
+		     <prop key="billing.spring">billingcontroller</prop>
+		     <prop key="/billingcontroller.spring">billingcontroller</prop>
+		     <prop key="/addtocartcontroller.spring">addtocartcontroller</prop>
+		      <prop key="/getbillcontroller.spring">getbillcontroller</prop>
+		      <prop key="/clearcartcontroller.spring">clearcartcontroller</prop>
+		      <prop key="/searchcontroller.spring">medsearchcontroller</prop>
+		      <prop key="/adduser1.spring">UserBeancontroller</prop>
+				<prop key="/deleteuser1.spring">DeleteUsercontroller</prop>
+				<prop key="/searchusercontroller.spring">searchusercontroller</prop>
+				<prop key="/reportcontroller.spring">reportcontroller</prop>
+				<prop key="/placeordercontroller.spring">placeordercontroller</prop>
+				<prop key="/viewexpiredcontroller.spring">viewexpiredcontroller</prop>
+				<prop key="/returnitemcontroller.spring">returnitemcontroller</prop>
+				<prop key="/addbatchcontroller.spring">addbatchcontroller</prop>
+				<prop key="/addtomedicinecontroller.spring">addtomedicinecontroller</prop>
+		</props>
+		</property>
+		</bean>	
+		
+		<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix"><value></value></property>
+		<property name="suffix"><value>.jsp</value></property>
+		</bean>
+		
+				
+		
+		
+		
+		
+		<bean name="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"></property>
+		<property name="username" value="system"></property>
+		<property name="password" value="password"></property>
+		</bean>
+		
+		
+		<bean name="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" scope="singleton">
+		<property name="dataSource">
+		<ref bean="datasource"></ref>
+		</property>
+		
+		
+		<property name="hibernateProperties">
+		<props>
+		<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+		<prop key="hibernate.show_sql">true</prop>
+		<prop key="hibernate.format_sql">true</prop>
+		<prop key="hibernate.use_sql_comments">true</prop>
+		<prop key="hibernate.hbm2ddl.auto">update</prop>
+		</props>
+		</property>
+		
+		<property name="mappingResources">
+		<list>
+		
+		<value>ems/mappings/login.hbm.xml</value>
+		<value>ems/mappings/medicine.hbm.xml</value>
+		<value>ems/mappings/batch.hbm.xml</value>
+		<value>ems/mappings/UserBean.hbm.xml</value>
+		<value>ems/mappings/order.hbm.xml</value>
+		</list>
+		</property>
+		
+		</bean>
+		
+		
+		
+		
+		</beans>
